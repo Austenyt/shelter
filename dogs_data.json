@@ -1,0 +1,38 @@
+[
+  {
+    "model": "dogs.category",
+    "pk": 1,
+    "fields": {
+      "name": "Ретривер",
+      "description": "Лучший друг"
+    }
+  },
+  {
+    "model": "dogs.category",
+    "pk": 2,
+    "fields": {
+      "name": "Корги",
+      "description": "Задумчивый мудрец"
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 1,
+    "fields": {
+      "name": "Стич",
+      "category": 1,
+      "photo": "",
+      "birth_day": null
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 2,
+    "fields": {
+      "name": "Маркиз",
+      "category": 2,
+      "photo": "",
+      "birth_day": null
+    }
+  }
+]
