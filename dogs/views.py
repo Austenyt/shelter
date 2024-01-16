@@ -1,16 +1,27 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 
 from dogs.models import Category, Dog
 
 
-def index(request):
-    context = {
-        'object_list': Category.objects.all()[:3],
+class IndexView(TemplateView):
+    template_name = 'dogs/index.html'
+    extra_context = {
         'title': 'Питомник - Главная'
     }
-    return render(request, 'dogs/index.html', context)
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object_list'] = Category.objects.all()[:3]
+        return context_data
+
+# def index(request):
+#     context = {
+#         'object_list': Category.objects.all()[:3],
+#         'title': 'Питомник - Главная'
+#     }
+#     return render(request, 'dogs/index.html', context)
 
 
 # def categories(request):
