@@ -6,38 +6,38 @@ from dogs.forms import DogForm
 from dogs.models import Category, Dog
 
 
-class IndexView(TemplateView):
-    template_name = 'dogs/index.html'
-    extra_context = {
-        'title': 'Питомник - Главная'
-    }
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        context_data['object_list'] = Category.objects.all()[:3]
-        return context_data
-
-# def index(request):
-#     context = {
-#         'object_list': Category.objects.all()[:3],
+# class IndexView(TemplateView):
+#     template_name = 'dogs/index.html'
+#     extra_context = {
 #         'title': 'Питомник - Главная'
 #     }
-#     return render(request, 'dogs/index.html', context)
+#
+#     def get_context_data(self, **kwargs):
+#         context_data = super().get_context_data(**kwargs)
+#         context_data['object_list'] = Category.objects.all()[:3]
+#         return context_data
 
-
-# def categories(request):
-#     context = {
-#         'object_list': Category.objects.all(),
-#         'title': 'Питомник - Наши породы'
-#     }
-#     return render(request, 'dogs/category_list.html', context)
-
-
-class CategoryListView(ListView):
-    model = Category
-    extra_context = {
-        'title': 'Питомник - все наши породы'
+def index(request):
+    context = {
+        'object_list': Category.objects.all()[:3],
+        'title': 'Питомник - Главная'
     }
+    return render(request, 'dogs/index.html', context)
+
+
+def categories(request):
+    context = {
+        'object_list': Category.objects.all(),
+        'title': 'Питомник - Наши породы'
+    }
+    return render(request, 'dogs/category_list.html', context)
+
+
+# class CategoryListView(ListView):
+#     model = Category
+#     extra_context = {
+#         'title': 'Питомник - все наши породы'
+#     }
 
 
 def category_dogs(request, pk):
@@ -75,14 +75,14 @@ class DogCreateView(CreateView):
     form_class = DogForm
 
 
-class DogUpdateView(UpdateView):
-    model = Dog
-    fields = ('name', 'category',)
-
-    def get_success_url(self):
-        return reverse('dogs:category', args=[self.object.category.pk])
-
-
-class DogDeleteView(DeleteView):
-    model = Dog
-    successful_url = reverse_lazy('dogs:categories')
+# class DogUpdateView(UpdateView):
+#     model = Dog
+#     fields = ('name', 'category',)
+#
+#     def get_success_url(self):
+#         return reverse('dogs:category', args=[self.object.category.pk])
+#
+#
+# class DogDeleteView(DeleteView):
+#     model = Dog
+#     successful_url = reverse_lazy('dogs:categories')
