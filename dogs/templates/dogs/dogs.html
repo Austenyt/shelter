@@ -2,8 +2,9 @@
 {% load my tags %}
 {% block content%}
     <div class="row">
-        <div class="col-12 nb-5">
+        <div class="col-12 mb-5">
             <a class="btn btn-primary" href="{% url 'dogs:dog_create' category_pk %}">Добавить собаку</a>
+        </div>
         {% for object in object_list %}
             <div class="col-md-4">
                 <div class="card mb-4 box-shadow">
