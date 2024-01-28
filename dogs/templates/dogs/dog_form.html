@@ -9,8 +9,8 @@
             </div>
             <div class="card-body">
                 <form method="post">
-                    {% csrf.token %}
-                    {{ form.as.p }}
+                    {% csrf_token %}
+                    {{ form.as_p }}
                     <button type="submit" class="btn btn-outline-success">Добавить</button>
                 </form>
             </div>

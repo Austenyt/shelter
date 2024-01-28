@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from dogs.forms import DogForm
@@ -28,9 +29,10 @@ def category_dogs(request, pk):
         'category_pk': category_item.pk,
         'title': f'Собаки породы - все наши породы {category_item.name}'
     }
-    return render(request, 'dogs/categories.html', context)
+    return render(request, 'dogs/dogs.html', context)
 
 
 class DogCreateView(CreateView):
     model = Dog
     form_class = DogForm
+    success_url = reverse_lazy('dogs:categories')
