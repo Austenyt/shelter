@@ -1,6 +1,6 @@
 from django.forms import inlineformset_factory
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
 from dogs.forms import DogForm, ParentForm
@@ -42,7 +42,9 @@ class DogCreateView(CreateView):
 class DogUpdateView(UpdateView):
     model = Dog
     form_class = DogForm
-    success_url = reverse_lazy('dogs:categories')
+
+    def get_success_url(self):
+        return reverse('dogs:dog_update', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
