@@ -16,13 +16,21 @@
     }
   },
   {
+    "model": "dogs.category",
+    "pk": 3,
+    "fields": {
+      "name": "Колли",
+      "description": "Шупыстик"
+    }
+  },
+  {
     "model": "dogs.dog",
     "pk": 1,
     "fields": {
       "name": "Стич",
       "category": 1,
       "photo": "",
-      "birth_day": null
+      "birth_day": "2020-01-01"
     }
   },
   {
@@ -33,6 +41,46 @@
       "category": 2,
       "photo": "",
       "birth_day": null
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 3,
+    "fields": {
+      "name": "Джинка",
+      "category": 3,
+      "photo": "",
+      "birth_day": null
+    }
+  },
+  {
+    "model": "dogs.parent",
+    "pk": 1,
+    "fields": {
+      "dog": 1,
+      "name": "Флэшка",
+      "category": 1,
+      "birth_day": "2010-12-12"
+    }
+  },
+  {
+    "model": "dogs.parent",
+    "pk": 2,
+    "fields": {
+      "dog": 1,
+      "name": "Шарик",
+      "category": 1,
+      "birth_day": "2009-11-11"
+    }
+  },
+  {
+    "model": "dogs.parent",
+    "pk": 3,
+    "fields": {
+      "dog": 1,
+      "name": "Сапожок",
+      "category": 1,
+      "birth_day": "2011-01-01"
     }
   }
 ]
