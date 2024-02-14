@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 
 from dogs.forms import DogForm, ParentForm
 from dogs.models import Category, Dog, Parent
@@ -15,6 +17,7 @@ def index(request):
     return render(request, 'dogs/index.html', context)
 
 
+@login_required
 def categories(request):
     context = {
         'object_list': Category.objects.all(),
@@ -23,17 +26,35 @@ def categories(request):
     return render(request, 'dogs/categories.html', context)
 
 
-def category_dogs(request, pk):
-    category_item = Category.objects.get(pk=pk)
-    context = {
-        'object_list': Dog.objects.filter(category_id=pk, owner=request.user),
-        'category_pk': category_item.pk,
-        'title': f'Собаки породы - все наши породы {category_item.name}'
-    }
-    return render(request, 'dogs/dogs.html', context)
+# @login_required
+# def category_dogs(request, pk):
+#     category_item = Category.objects.get(pk=pk)
+#     context = {
+#         'object_list': Dog.objects.filter(category_id=pk, owner=request.user),
+#         'category_pk': category_item.pk,
+#         'title': f'Собаки породы - все наши породы {category_item.name}'
+#     }
+#     return render(request, 'dogs/dog_list.html', context)
 
 
-class DogCreateView(CreateView):
+class DogListView(ListView):
+    model = Dog
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            category_id=self.kwargs.get('pk'),
+            owner=self.request.user
+        )
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        category_item = Category.objects.get(pk=self.kwargs.get('pk'))
+        context_data['category_pk'] = category_item.pk
+        context_data['title'] = f'Собаки породы {category_item.name}'
+        return context_data
+
+
+class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog
     form_class = DogForm
     success_url = reverse_lazy('dogs:categories')
@@ -46,7 +67,7 @@ class DogCreateView(CreateView):
         return super().form_valid(form)
 
 
-class DogUpdateView(UpdateView):
+class DogUpdateView(LoginRequiredMixin, UpdateView):
     model = Dog
     form_class = DogForm
 
