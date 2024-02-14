@@ -1,7 +1,7 @@
 from django.urls import path
 
 from dogs.apps import DogsConfig
-from dogs.views import index, categories, DogCreateView, category_dogs, DogUpdateView
+from dogs.views import index, categories, DogCreateView, DogUpdateView, category_dogs
 
 app_name = DogsConfig.name
 
