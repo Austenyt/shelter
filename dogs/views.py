@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, ListView
@@ -70,6 +71,12 @@ class DogCreateView(LoginRequiredMixin, CreateView):
 class DogUpdateView(LoginRequiredMixin, UpdateView):
     model = Dog
     form_class = DogForm
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner != self.request.user:
+            raise Http404
+        return self.object
 
     def get_success_url(self):
         return reverse('dogs:dog_update', args=[self.kwargs.get('pk')])

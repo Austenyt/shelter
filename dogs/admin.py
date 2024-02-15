@@ -10,5 +10,5 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Dog)
 class DogAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category',)
+    list_display = ('name', 'category', 'owner')
     list_filter = ('category',)
